@@ -1,0 +1,28 @@
+===================================================================
+BDACC (BIG DATA ANALYTICS & CONSULTING CELL) - OFFICIAL KNOWLEDGE BASE
+National Institute of Technology (NIT), Warangal
+===================================================================
+
+[SECTION 1: ABOUT & FOUNDING HISTORY]
+The Big Data Analytics & Consulting Cell (BDACC) is the premier student-led technical and consulting club at National Institute of Technology Warangal (NITW).
+- Founded Year: 2019
+- Founding Faculty Advisor: Dr. R. B. V. Subramaanyam (Head of Computer Science & Engineering)
+- First General Secretary: K. Sai Vamsi (Batch of 2021, CSE)
+- Motto: "Transforming raw data into strategic decisions."
+
+[SECTION 2: CORE DOMAINS & TEAMS]
+BDACC operates across four specialized student wings:
+1. Data Engineering & Analytics: Big Data pipelines, PySpark, SQL databases, distributed computing.
+2. Artificial Intelligence & ML: Deep learning, Natural Language Processing (NLP), Computer Vision, LLM agent development.
+3. Management & Strategy Consulting: Case studies, market entry strategy, product management frameworks (RICE, MoSCoW, MECE).
+4. Product & UI/UX Design: Wireframing, product teardowns, user experience architecture, design systems.
+
+[SECTION 3: SIGNATURE EVENTS & INITIATIVES]
+- Datathon (Annual Flagship): NIT Warangal's largest 36-hour data science hackathon with real-world industry datasets.
+- Case Craft: National-level case study competition testing consulting frameworks and financial modeling.
+- AI Lab Orientation: Interactive hands-on session introducing first-year students to building LLM applications, RAG pipelines, and Prompt Engineering.
+- Weekly Paper Reading Groups: Discussion circle reviewing latest arXiv preprints in Machine Learning and Systems architecture.
+
+[SECTION 4: RECRUITMENT & MEMBERSHIP]
+- BDACC inducts freshers through a two-phase process: Aptitude & Domain Test followed by a Case/Coding Teardown interview.
+- Active membership consists of over 120 students across B.Tech, M.Tech, and MCA programs at NIT Warangal.

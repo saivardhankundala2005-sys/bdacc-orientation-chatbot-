@@ -1,0 +1,10 @@
+langchain>=0.2.0
+langchain-core
+langchain-community
+langchain-google-genai
+langchain-chroma
+langchain-text-splitters
+chromadb
+pypdf
+python-dotenv
+gradio>=4.0.0
