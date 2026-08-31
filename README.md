@@ -6,6 +6,22 @@ This app walks students and developers through the fundamental building blocks o
 
 ---
 
+## ☁️ Deploy on Streamlit Community Cloud (1-Click)
+
+You can deploy this application directly to **Streamlit Community Cloud** for free!
+
+1. Go to **[share.streamlit.io](https://share.streamlit.io)** and log in with your GitHub account.
+2. Click **"New app"**.
+3. Select your repository: `saivardhankundala2005-sys/bdacc-orientation-chatbot-`
+4. Set Main file path: **`streamlit_app.py`**
+5. Under **Advanced settings... -> Secrets**, paste your API key:
+   ```toml
+   GEMINI_API_KEY = "your_actual_gemini_api_key_here"
+   ```
+6. Click **Deploy!**
+
+---
+
 ## 🎯 Core Concept & Teaching Modules
 
 Instead of a black-box AI chatbot interface, this application reveals the exact 10–20 line Python code snippet for each architectural stage, executes it live on stage, and displays the visual data flow architecture:
@@ -31,7 +47,7 @@ Instead of a black-box AI chatbot interface, this application reveals the exact 
 
 ## 🛠️ Tech Stack
 
-- **UI Framework**: Gradio 6 (`gr.Blocks`)
+- **UI Frameworks**: Streamlit (`streamlit_app.py`) & Gradio 6 (`app.py`)
 - **Orchestration**: LangChain (`langchain`, `langchain-core`, `langchain-community`)
 - **LLM Engine**: Google Gemini API (`gemini-2.5-flash` via `langchain-google-genai`)
 - **Vector Database**: Chroma (`langchain-chroma`)
@@ -40,7 +56,7 @@ Instead of a black-box AI chatbot interface, this application reveals the exact 
 
 ---
 
-## 📋 Prerequisites & Installation
+## 📋 Local Setup & Installation
 
 ### 1. Clone the Repository
 ```bash
@@ -76,23 +92,23 @@ GEMINI_API_KEY=AIzaSy...YourActualGeminiApiKey
 
 ---
 
-## 🚀 Running the Application
+## 🚀 Running Locally
 
-Run the Python application:
+### Streamlit Application:
+```bash
+streamlit run streamlit_app.py
+```
+
+### Gradio Application:
 ```bash
 python app.py
-```
-
-Open your browser and navigate to:
-```
-http://127.0.0.1:7860
 ```
 
 ---
 
 ## ⚙️ Model Customization
 
-The active model names are configured at the top of [`app.py`](file:///c:/Users/saiva/Downloads/bdacc%20chotbot%20demonstration/app.py):
+The active model names are configured at the top of [`streamlit_app.py`](file:///c:/Users/saiva/Downloads/bdacc%20chotbot%20demonstration/streamlit_app.py) and [`app.py`](file:///c:/Users/saiva/Downloads/bdacc%20chotbot%20demonstration/app.py):
 
 ```python
 DEFAULT_MODEL_NAME = "gemini-2.5-flash"
