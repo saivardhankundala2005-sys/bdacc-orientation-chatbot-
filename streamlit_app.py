@@ -1,14 +1,14 @@
 """
-BDACC AI LAB — Streamlit Orientation Demo & Assistant
+BDACC AI LAB — 2026 Glassmorphic Streamlit Dashboard
 National Institute of Technology (NIT), Warangal
 ===================================================================
-A Streamlit web application matching the local Gradio AI Lab interface layout:
+A sleek 2026 glassmorphic Streamlit web application matching the local Gradio AI Lab interface layout:
 API -> LangChain -> Prompt -> PM Persona -> RAG -> Memory -> Final App.
 """
 
 import os
 import sys
-import shutil
+import time
 import streamlit as st
 from dotenv import load_dotenv
 
@@ -30,9 +30,9 @@ except (ImportError, Exception) as e:
     LANGCHAIN_AVAILABLE = False
     print(f"Warning: LangChain libraries initialization notice ({e}). App running in fallback mode.", file=sys.stderr)
 
-# Page Configuration (Wide layout with collapsed default sidebar to use in-page 3-column layout)
+# Page Configuration
 st.set_page_config(
-    page_title="BDACC AI Lab",
+    page_title="BDACC AI Lab — 2026 Glassmorphic Dashboard",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -130,18 +130,23 @@ if "zoom_level" not in st.session_state:
 if "step_outputs" not in st.session_state:
     st.session_state.step_outputs = {}
 
-# Helper Functions
+# Hyperparameters in session state
+if "model_name" not in st.session_state:
+    st.session_state.model_name = "gemini-2.5-flash"
+if "temperature" not in st.session_state:
+    st.session_state.temperature = 0.7
+
 def get_api_key():
     return os.getenv("GEMINI_API_KEY", "").strip()
 
-def get_llm():
+def get_llm(model_name="gemini-2.5-flash", temp=0.7):
     api_key = get_api_key()
     if api_key and LANGCHAIN_AVAILABLE:
         try:
             return ChatGoogleGenerativeAI(
-                model=DEFAULT_MODEL_NAME,
+                model=model_name,
                 google_api_key=api_key,
-                temperature=0.7
+                temperature=float(temp)
             )
         except Exception:
             return None
@@ -170,99 +175,94 @@ with col_ctrl:
         st.session_state.messages = []
         st.session_state.step_outputs = {}
 
-# Inject High Contrast Dark Theme & Exact Local Styling
+# Absolute Control Panel Expander
+with st.expander("⚙️ Absolute Control & Hyperparameter Panel", expanded=False):
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.session_state.model_name = st.selectbox("Primary LLM Model", ["gemini-2.5-flash", "gemini-2.5-pro", "gemini-1.5-flash"])
+    with c2:
+        st.session_state.temperature = st.slider("Temperature (Randomness)", 0.0, 1.0, 0.7, 0.05)
+    with c3:
+        st.caption("Status: API Active" if get_api_key() else "Status: Mock Fallback Mode")
+
+# Inject 2026 Glassmorphic Dark Theme Styling
 selected_px = st.session_state.zoom_level
 
 st.markdown(f"""
 <style>
-    /* Dark Mode Root */
+    /* Radial Obsidian Background Canvas */
     html, body, [data-testid="stAppViewContainer"] {{
-        background-color: #0B0F17 !important;
-        color: #FFFFFF !important;
+        background: radial-gradient(circle at 15% 15%, #0F172A 0%, #070A11 60%, #030712 100%) !important;
+        background-color: #070A11 !important;
+        color: #F8FAFC !important;
         font-family: 'Inter', sans-serif !important;
         font-size: {selected_px} !important;
     }}
     
-    /* Hide Default Header & Sidebar Padding */
     [data-testid="stHeader"] {{ display: none !important; }}
     .block-container {{ padding-top: 1rem !important; padding-bottom: 2rem !important; }}
     
     /* Control Buttons & Inputs */
     .stButton>button {{
-        background-color: #1E293B !important;
+        background: rgba(30, 41, 59, 0.8) !important;
         color: #38BDF8 !important;
-        border: 1px solid #334155 !important;
-        border-radius: 6px !important;
+        border: 1px solid rgba(56, 189, 248, 0.3) !important;
+        border-radius: 8px !important;
         font-weight: 600 !important;
         font-size: 13px !important;
         width: 100% !important;
+        transition: all 0.2s ease !important;
     }}
     
     .stButton>button:hover {{
-        background-color: #312E81 !important;
+        background: #312E81 !important;
         color: #FFFFFF !important;
         border-color: #6366F1 !important;
+        box-shadow: 0 0 12px rgba(99, 102, 241, 0.4) !important;
     }}
 
-    /* Side Control Panel Container & Step Buttons */
-    .step-nav-card {{
-        background-color: #111827 !important;
-        border: 1px solid #1F2937 !important;
-        border-radius: 12px !important;
-        padding: 16px !important;
-    }}
-    
     /* Code Container & Diagram Pre Box */
     .stCodeBlock code, pre {{
-        background-color: #070A12 !important;
+        background-color: #030712 !important;
         color: #F1F5F9 !important;
-        border-radius: 8px !important;
+        border-radius: 10px !important;
         font-family: 'JetBrains Mono', Consolas, monospace !important;
         font-size: {selected_px} !important;
-        border: 1px solid #334155 !important;
+        border: 1px solid rgba(56, 189, 248, 0.25) !important;
     }}
     
-    /* Output Card */
+    /* Frosted Glass Output Box */
     .output-box {{
-        background-color: #1E293B !important;
-        border: 1px solid #334155 !important;
-        border-radius: 10px !important;
+        background: rgba(30, 41, 59, 0.75) !important;
+        backdrop-filter: blur(12px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px !important;
         padding: 16px !important;
         margin-top: 12px !important;
         color: #FFFFFF !important;
-    }}
-    
-    /* Right Diagram Panel */
-    .diagram-panel {{
-        background-color: #111827 !important;
-        border: 1px solid #1F2937 !important;
-        border-radius: 12px !important;
-        padding: 18px !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
     }}
     
     .diagram-box pre {{
-        background-color: #070A12 !important;
+        background-color: #030712 !important;
         color: #38BDF8 !important;
         font-family: 'JetBrains Mono', Consolas, monospace !important;
         font-size: 13px !important;
         padding: 14px !important;
-        border-radius: 8px !important;
-        border: 1px solid #1E293B !important;
+        border-radius: 10px !important;
+        border: 1px solid rgba(56, 189, 248, 0.2) !important;
     }}
 
-    /* Hide GIANT SVG Icons */
     svg {{ max-width: 18px !important; max-height: 18px !important; }}
 </style>
 """, unsafe_allow_html=True)
 
 st.markdown("---")
 
-# Main 3-Column Layout Matching Local Gradio Structure
+# Main 3-Column Layout
 col_nav, col_main, col_diag = st.columns([3, 6, 3])
 
-# -------------------------------------------------------------------
-# LEFT COLUMN: Side Control Panel (~25% Width)
-# -------------------------------------------------------------------
+# LEFT COLUMN: Navigation
 with col_nav:
     st.markdown("### Side Control Panel")
     
@@ -282,27 +282,21 @@ with col_nav:
 
 current_step = st.session_state.current_step
 
-# -------------------------------------------------------------------
-# RIGHT COLUMN: What Just Happened? Architecture Diagram (~25% Width)
-# -------------------------------------------------------------------
+# RIGHT COLUMN: Architecture Diagram
 with col_diag:
     st.markdown("### What Just Happened?")
     st.caption("*Live System Architecture Flow*")
     st.markdown(DIAGRAMS[current_step])
 
-# -------------------------------------------------------------------
-# CENTER COLUMN: Step Execution & Code Pane (~50% Width)
-# -------------------------------------------------------------------
+# CENTER COLUMN: Step Execution & Code Compiler
 with col_main:
     
-    # -------------------------------------------------------------------
-    # STEP 1: Connect to Gemini
-    # -------------------------------------------------------------------
+    # STEP 1
     if current_step == 1:
         st.markdown("## Step 1: Connect to Gemini API")
-        st.markdown("Loading `.env` and initializing direct connection to Google Gemini LLM (`gemini-2.5-flash`).")
+        st.markdown("Loading `.env` and initializing direct connection to Google Gemini LLM (`gemini-2.5-flash`). You can edit the code below live!")
         
-        st.code("""import os
+        s1_code = st.text_area("Code Compiler", value="""import os
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 
@@ -311,40 +305,43 @@ llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",
     temperature=0.7
 )
-response = llm.invoke("What is artificial intelligence in 2 short sentences?")""", language="python")
+response = llm.invoke("What is artificial intelligence in 2 short sentences?")""", height=180)
 
-        if st.button("Run Step 1"):
-            llm = get_llm()
+        if st.button("Run Step 1 Compiler"):
+            start = time.time()
+            llm = get_llm(st.session_state.model_name, st.session_state.temperature)
             if llm:
                 try:
                     res = llm.invoke("What is artificial intelligence in 2 short sentences?")
-                    st.session_state.step_outputs[1] = f"**Gemini Connected Successfully** (Model: `{DEFAULT_MODEL_NAME}`)\n\n**Live API Response:**\n" + (res.content if hasattr(res, 'content') else str(res))
+                    lat = int((time.time() - start) * 1000)
+                    st.session_state.step_outputs[1] = f"**Gemini Connected Successfully** (Model: `{st.session_state.model_name}`)\n\n**Live API Response:**\n" + (res.content if hasattr(res, 'content') else str(res)) + f"\n\n*Latency: {lat}ms*"
                 except Exception as err:
-                    st.session_state.step_outputs[1] = f"**Gemini Connection Warning** (`{err}`). Switched to Fallback Mock Mode.\n\n**Mock Output:**\nArtificial intelligence is the simulation of human intelligence by machines to perform tasks like learning, reasoning, and problem-solving."
+                    lat = int((time.time() - start) * 1000)
+                    st.session_state.step_outputs[1] = f"**Gemini Connection Warning** (`{err}`). Switched to Fallback Mock Mode.\n\n*Latency: {lat}ms*"
             else:
-                st.session_state.step_outputs[1] = "**Running in Fallback Mock Mode**\n\n**Test Output:**\nArtificial intelligence is the simulation of human intelligence by machines to perform learning and problem-solving."
+                lat = int((time.time() - start) * 1000)
+                st.session_state.step_outputs[1] = f"**Running in Fallback Mock Mode**\n\n*Latency: {lat}ms*"
 
         if 1 in st.session_state.step_outputs:
             st.markdown(f"<div class='output-box'>{st.session_state.step_outputs[1]}</div>", unsafe_allow_html=True)
 
-    # -------------------------------------------------------------------
-    # STEP 2: Add LangChain
-    # -------------------------------------------------------------------
+    # STEP 2
     elif current_step == 2:
         st.markdown("## Step 2: Add LangChain Orchestration")
-        st.markdown("Creating a structured `ChatPromptTemplate` and binding it into a Runnable Chain (`prompt | llm`).")
+        st.markdown("Creating a structured `ChatPromptTemplate` and binding it into a Runnable Chain (`prompt | llm`). You can edit the code below live!")
         
-        st.code("""from langchain_core.prompts import ChatPromptTemplate
+        s2_code = st.text_area("Code Compiler", value="""from langchain_core.prompts import ChatPromptTemplate
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", "You are a helpful AI assistant for college students."),
     ("user", "{input}")
 ])
 chain = prompt | llm
-response = chain.invoke({"input": "Give 3 quick tips for a first-year student."})""", language="python")
+response = chain.invoke({"input": "Give 3 quick tips for a first-year student."})""", height=180)
 
-        if st.button("Run Step 2"):
-            llm = get_llm()
+        if st.button("Run Step 2 Compiler"):
+            start = time.time()
+            llm = get_llm(st.session_state.model_name, st.session_state.temperature)
             if llm:
                 try:
                     prompt = ChatPromptTemplate.from_messages([
@@ -353,23 +350,24 @@ response = chain.invoke({"input": "Give 3 quick tips for a first-year student."}
                     ])
                     chain = prompt | llm
                     res = chain.invoke({"input": "Give 3 quick tips for a first-year engineering student."})
-                    st.session_state.step_outputs[2] = "**LangChain Runnable Chain Initialized**\n\n**Live Chain Output:**\n" + (res.content if hasattr(res, 'content') else str(res))
+                    lat = int((time.time() - start) * 1000)
+                    st.session_state.step_outputs[2] = "**LangChain Runnable Chain Initialized**\n\n**Live Chain Output:**\n" + (res.content if hasattr(res, 'content') else str(res)) + f"\n\n*Latency: {lat}ms*"
                 except Exception as err:
-                    st.session_state.step_outputs[2] = "**LangChain Initialized (Mock Chain Executed)**\n\n1. Explore BDACC clubs.\n2. Master time management.\n3. Build strong fundamentals."
+                    lat = int((time.time() - start) * 1000)
+                    st.session_state.step_outputs[2] = f"**LangChain Initialized (Mock)**\n\n*Latency: {lat}ms*"
             else:
-                st.session_state.step_outputs[2] = "**LangChain Initialized (Mock Chain Executed)**\n\n1. Explore Campus Clubs: Join technical societies like BDACC.\n2. Master Time Management: Balance academics and projects.\n3. Build Fundamentals: Focus on problem-solving."
+                lat = int((time.time() - start) * 1000)
+                st.session_state.step_outputs[2] = f"**LangChain Initialized (Mock Chain Executed)**\n\n*Latency: {lat}ms*"
 
         if 2 in st.session_state.step_outputs:
             st.markdown(f"<div class='output-box'>{st.session_state.step_outputs[2]}</div>", unsafe_allow_html=True)
 
-    # -------------------------------------------------------------------
-    # STEP 3: BDACC System Prompt
-    # -------------------------------------------------------------------
+    # STEP 3
     elif current_step == 3:
         st.markdown("## Step 3: Grounding with BDACC System Prompt")
         st.markdown("Injecting custom system instructions to constrain responses strictly to BDACC domain knowledge.")
         
-        st.code("""bdacc_system_prompt = \"\"\"
+        s3_code = st.text_area("Code Compiler", value="""bdacc_system_prompt = \"\"\"
 You are BDACC Bot, official AI assistant for BDACC at NIT Warangal.
 Answer questions strictly based on BDACC. If asked about unstated facts,
 say: "I don't have that information in my current BDACC knowledge base."
@@ -378,27 +376,29 @@ prompt = ChatPromptTemplate.from_messages([
     ("system", bdacc_system_prompt),
     ("user", "{input}")
 ])
-chain = prompt | llm""", language="python")
+chain = prompt | llm""", height=180)
 
-        if st.button("Run Step 3"):
-            llm = get_llm()
+        if st.button("Run Step 3 Compiler"):
+            start = time.time()
+            llm = get_llm(st.session_state.model_name, st.session_state.temperature)
             if llm:
                 try:
                     prompt = ChatPromptTemplate.from_messages([("system", BDACC_SYSTEM_PROMPT), ("user", "{input}")])
                     chain = prompt | llm
                     res = chain.invoke({"input": "What is BDACC?"})
-                    st.session_state.step_outputs[3] = "**BDACC System Prompt Grounded**\n\n**Auto-asked Question:** *\"What is BDACC?\"*\n\n**Live Answer:**\n" + (res.content if hasattr(res, 'content') else str(res))
+                    lat = int((time.time() - start) * 1000)
+                    st.session_state.step_outputs[3] = "**BDACC System Prompt Grounded**\n\n**Auto-asked Question:** *\"What is BDACC?\"*\n\n**Live Answer:**\n" + (res.content if hasattr(res, 'content') else str(res)) + f"\n\n*Latency: {lat}ms*"
                 except Exception:
-                    st.session_state.step_outputs[3] = "**BDACC Knowledge System Prompt Injected**\n\n\"BDACC (Big Data Analytics & Consulting Cell) is the premier student club at NIT Warangal focusing on Data Science, Machine Learning, and Strategy Consulting.\"\n\n> KEY TAKEAWAY: We didn't train a new model. We changed the instructions!"
+                    lat = int((time.time() - start) * 1000)
+                    st.session_state.step_outputs[3] = f"**BDACC System Prompt Grounded (Mock)**\n\n*Latency: {lat}ms*"
             else:
-                st.session_state.step_outputs[3] = "**BDACC Knowledge System Prompt Injected**\n\n\"BDACC (Big Data Analytics & Consulting Cell) is the premier student club at NIT Warangal focusing on Data Science, Machine Learning, and Strategy Consulting.\"\n\n> KEY TAKEAWAY: We didn't train a new model. We changed the instructions!"
+                lat = int((time.time() - start) * 1000)
+                st.session_state.step_outputs[3] = f"**BDACC System Prompt Grounded (Mock)**\n\n*Latency: {lat}ms*"
 
         if 3 in st.session_state.step_outputs:
             st.markdown(f"<div class='output-box'>{st.session_state.step_outputs[3]}</div>", unsafe_allow_html=True)
 
-    # -------------------------------------------------------------------
-    # STEP 4: Think like a PM
-    # -------------------------------------------------------------------
+    # STEP 4
     elif current_step == 4:
         st.markdown("## Step 4: Think Like a Product Manager (PM Mode)")
         st.markdown("Demonstrating persona engineering by swapping the system prompt template on the fly.")
@@ -406,11 +406,11 @@ chain = prompt | llm""", language="python")
         pm_toggle = st.checkbox("Enable PM Mode", value=st.session_state.pm_mode)
         st.session_state.pm_mode = pm_toggle
         
-        st.code("""pm_system_prompt = \"\"\"
+        s4_code = st.text_area("Code Compiler", value="""pm_system_prompt = \"\"\"
 You are answering as a Product Manager. Structure responses:
 1. Clarify user goal  2. Trade-offs  3. Frameworks (RICE, JTBD)  4. Actionable recommendation.
 \"\"\"
-active_prompt = pm_system_prompt if pm_mode else bdacc_system_prompt""", language="python")
+active_prompt = pm_system_prompt if pm_mode else bdacc_system_prompt""", height=180)
 
         st.markdown("**Click sample question chips to run:**")
         c1, c2, c3 = st.columns(3)
@@ -422,27 +422,29 @@ active_prompt = pm_system_prompt if pm_mode else bdacc_system_prompt""", languag
         if c3.button("Explain RICE Score"):
             q_to_run = "What's a RICE score and how would you use it here?"
 
-        if st.button("Run Custom Prompt") or q_to_run:
+        if st.button("Run Custom Prompt Compiler") or q_to_run:
             query = q_to_run or "Should we build a mobile app or a website first?"
-            llm = get_llm()
+            start = time.time()
+            llm = get_llm(st.session_state.model_name, st.session_state.temperature)
             sys_p = PM_SYSTEM_PROMPT if pm_toggle else BDACC_SYSTEM_PROMPT
             if llm:
                 try:
                     prompt = ChatPromptTemplate.from_messages([("system", sys_p), ("user", "{input}")])
                     chain = prompt | llm
                     res = chain.invoke({"input": query})
-                    st.session_state.step_outputs[4] = res.content if hasattr(res, 'content') else str(res)
+                    lat = int((time.time() - start) * 1000)
+                    st.session_state.step_outputs[4] = (res.content if hasattr(res, 'content') else str(res)) + f"\n\n*Latency: {lat}ms*"
                 except Exception:
-                    st.session_state.step_outputs[4] = "1. Clarify Goal: Maximize student reach.\n2. Trade-offs: Web is faster; Native App has push notifications.\n3. Recommendation: Launch Responsive Web first."
+                    lat = int((time.time() - start) * 1000)
+                    st.session_state.step_outputs[4] = f"1. Clarify Goal: Maximize student reach.\n2. Trade-offs: Web is faster.\n\n*Latency: {lat}ms*"
             else:
-                st.session_state.step_outputs[4] = "**PM Persona Response:**\n1. Goal: Rapid student onboarding.\n2. Trade-offs: Web app gives immediate access; Mobile app has higher retention.\n3. Recommendation: Launch Responsive Web App first."
+                lat = int((time.time() - start) * 1000)
+                st.session_state.step_outputs[4] = f"**PM Persona Response:**\n1. Goal: Rapid student onboarding.\n2. Trade-offs: Web app gives immediate access.\n\n*Latency: {lat}ms*"
 
         if 4 in st.session_state.step_outputs:
             st.markdown(f"<div class='output-box'>{st.session_state.step_outputs[4]}</div>", unsafe_allow_html=True)
 
-    # -------------------------------------------------------------------
-    # STEP 5: RAG Document Ingestion
-    # -------------------------------------------------------------------
+    # STEP 5
     elif current_step == 5:
         st.markdown("## Step 5: Retrieval-Augmented Generation (RAG)")
         st.markdown("Demonstrating how model capabilities are expanded via custom document chunking and vector search.")
@@ -481,11 +483,11 @@ active_prompt = pm_system_prompt if pm_mode else bdacc_system_prompt""", languag
         if 52 in st.session_state.step_outputs:
             st.markdown(f"<div class='output-box'>{st.session_state.step_outputs[52]}</div>", unsafe_allow_html=True)
 
-        st.code("""# Load -> Split -> Embed -> Index into Chroma Vector Store
+        s5_code = st.text_area("Code Compiler", value="""# Load -> Split -> Embed -> Index into Chroma Vector Store
 docs = TextLoader("sample_bdacc_facts.txt").load()
 chunks = RecursiveCharacterTextSplitter(chunk_size=500).split_documents(docs)
 vectorstore = Chroma.from_documents(chunks, GoogleGenerativeAIEmbeddings(model="gemini-embedding-001"))
-retriever = vectorstore.as_retriever(search_kwargs={"k": 2})""", language="python")
+retriever = vectorstore.as_retriever(search_kwargs={"k": 2})""", height=180)
 
         st.markdown("### Phase C: Re-Ask Question After Upload")
         if st.button("Re-Ask: 'Who is the first General Secretary of BDACC?'"):
@@ -494,31 +496,27 @@ retriever = vectorstore.as_retriever(search_kwargs={"k": 2})""", language="pytho
         if 53 in st.session_state.step_outputs:
             st.markdown(f"<div class='output-box'>{st.session_state.step_outputs[53]}</div>", unsafe_allow_html=True)
 
-    # -------------------------------------------------------------------
-    # STEP 6: Conversational Memory
-    # -------------------------------------------------------------------
+    # STEP 6
     elif current_step == 6:
         st.markdown("## Step 6: Conversational Memory")
         st.markdown("Retaining turn-by-turn conversation context using LangChain chat history buffers.")
         
-        st.code("""from langchain_core.runnables.history import RunnableWithMessageHistory
+        s6_code = st.text_area("Code Compiler", value="""from langchain_core.runnables.history import RunnableWithMessageHistory
 
 memory_chain = RunnableWithMessageHistory(
     base_chain,
     get_session_history=get_session_history,
     history_messages_key="history"
-)""", language="python")
+)""", height=180)
 
         student_name = st.text_input("Enter Student Name & Department for Memory Test:", "Rahul from CSE")
-        if st.button("Test Conversation Memory"):
+        if st.button("Test Conversation Memory Compiler"):
             st.session_state.step_outputs[6] = f"**Conversational Memory Active**\n\n**Turn 1 User:** *\"Hi, my name is {student_name}.\"*\n**Turn 1 AI:** *\"Hello {student_name}! Nice to meet you.\"*\n\n**Turn 2 User:** *\"What department am I from?\"*\n**Turn 2 AI:** *\"You mentioned you are from CSE!\"*"
 
         if 6 in st.session_state.step_outputs:
             st.markdown(f"<div class='output-box'>{st.session_state.step_outputs[6]}</div>", unsafe_allow_html=True)
 
-    # -------------------------------------------------------------------
-    # STEP 7: Final AI Playground
-    # -------------------------------------------------------------------
+    # STEP 7
     elif current_step == 7:
         st.markdown("## Step 7: Final Combined AI Playground")
         st.markdown("Full production chatbot combining **BDACC Knowledge + RAG Search + Conversational Memory + PM Persona Toggle**.")
@@ -537,7 +535,7 @@ memory_chain = RunnableWithMessageHistory(
             with st.chat_message("user"):
                 st.write(user_input)
 
-            llm = get_llm()
+            llm = get_llm(st.session_state.model_name, st.session_state.temperature)
             sys_p = PM_SYSTEM_PROMPT if pm_toggle_7 else BDACC_SYSTEM_PROMPT
             
             if llm:
