@@ -62,7 +62,7 @@ DIAGRAMS = {
 │ USER ──> GEMINI API ──> GEMINI 2.5 FLASH ──> RESPONSE    │
 └──────────────────────────────────────────────────────────┘
 ```
-📌 **Step 1: Direct REST API Connection**
+**Step 1: Direct REST API Connection**
 • Direct REST API connection to Google's LLM engine.
 """,
     2: """```text
@@ -70,7 +70,7 @@ DIAGRAMS = {
 │ USER ──> PROMPT TEMPLATE ──> LANGCHAIN ──> GEMINI        │
 └──────────────────────────────────────────────────────────┘
 ```
-📌 **Step 2: LangChain Runnable Chain**
+**Step 2: LangChain Runnable Chain**
 • LangChain orchestrates inputs with structured system/user templates.
 """,
     3: """```text
@@ -78,7 +78,7 @@ DIAGRAMS = {
 │ USER ──> BDACC SYSTEM PROMPT ──> LANGCHAIN ──> GEMINI    │
 └──────────────────────────────────────────────────────────┘
 ```
-📌 **Step 3: System Prompt Grounding**
+**Step 3: System Prompt Grounding**
 • Grounding the model with custom system instructions (No training required!).
 """,
     4: """```text
@@ -86,7 +86,7 @@ DIAGRAMS = {
 │ USER ──> [PM / BDACC PROMPT] ──> LANGCHAIN ──> GEMINI    │
 └──────────────────────────────────────────────────────────┘
 ```
-📌 **Step 4: Dynamic Persona Control**
+**Step 4: Dynamic Persona Control**
 • Persona engineering by dynamically swapping the system prompt template.
 """,
     5: """```text
@@ -94,7 +94,7 @@ DIAGRAMS = {
 │ QUESTION ──> CHROMA VECTOR STORE ──> PROMPT ──> GEMINI   │
 └──────────────────────────────────────────────────────────┘
 ```
-📌 **Step 5: Retrieval-Augmented Generation (RAG)**
+**Step 5: Retrieval-Augmented Generation (RAG)**
 • RAG fetches custom knowledge chunks live from document vectors.
 """,
     6: """```text
@@ -102,7 +102,7 @@ DIAGRAMS = {
 │ USER ──> CHAT HISTORY ──> COMBINED CONTEXT ──> GEMINI    │
 └──────────────────────────────────────────────────────────┘
 ```
-📌 **Step 6: Conversation Memory**
+**Step 6: Conversation Memory**
 • Multi-turn conversational memory via chat history tracking.
 """,
     7: """```text
@@ -110,7 +110,7 @@ DIAGRAMS = {
 │ USER ──> HYBRID RAG + MEMORY + PERSONA ──> GEMINI        │
 └──────────────────────────────────────────────────────────┘
 ```
-📌 **Step 7: Full AI Playground**
+**Step 7: Full AI Playground**
 • Production-ready AI application uniting RAG, Memory, & Persona Control!
 """
 }
@@ -834,16 +834,16 @@ with gr.Blocks(title="BDACC AI Lab Orientation") as demo:
     # Top Header & Presenter Controls Toolbar
     with gr.Row():
         with gr.Column(scale=5):
-            gr.Markdown("# 🚀 BDACC AI Lab")
+            gr.Markdown("# BDACC AI Lab")
         with gr.Column(scale=7):
-            gr.Markdown("### 🔍 Controls")
+            gr.Markdown("### Controls")
             with gr.Row():
-                btn_font_std = gr.Button("🔤 Standard", size="sm", elem_classes=["presenter-btn"])
-                btn_font_aud = gr.Button("📺 Audience (19px)", size="sm", elem_classes=["presenter-btn"])
-                btn_font_lg = gr.Button("🔍 Large (23px)", size="sm", elem_classes=["presenter-btn"])
-                btn_font_xl = gr.Button("⚡ XL (27px)", size="sm", elem_classes=["presenter-btn"])
-                btn_expand_code = gr.Button("↔️ Expand Code", size="sm", elem_classes=["presenter-btn"])
-                reset_btn = gr.Button("🔄 Reset", variant="secondary", size="sm")
+                btn_font_std = gr.Button("Standard", size="sm", elem_classes=["presenter-btn"])
+                btn_font_aud = gr.Button("Audience (19px)", size="sm", elem_classes=["presenter-btn"])
+                btn_font_lg = gr.Button("Large (23px)", size="sm", elem_classes=["presenter-btn"])
+                btn_font_xl = gr.Button("XL (27px)", size="sm", elem_classes=["presenter-btn"])
+                btn_expand_code = gr.Button("Expand Code", size="sm", elem_classes=["presenter-btn"])
+                reset_btn = gr.Button("Reset", variant="secondary", size="sm")
 
     gr.Markdown("---")
 
@@ -852,14 +852,14 @@ with gr.Blocks(title="BDACC AI Lab Orientation") as demo:
         
         # Left Sidebar Navigation (~260px width)
         with gr.Column(scale=3, elem_id="sidebar-column"):
-            gr.Markdown("### 📌 Side Control Panel")
-            btn_step1 = gr.Button("1️⃣ Connect to Gemini", elem_classes=["step-nav-btn"])
-            btn_step2 = gr.Button("2️⃣ Add LangChain", elem_classes=["step-nav-btn"])
-            btn_step3 = gr.Button("3️⃣ BDACC Prompt", elem_classes=["step-nav-btn"])
-            btn_step4 = gr.Button("4️⃣ Think like a PM", elem_classes=["step-nav-btn"])
-            btn_step5 = gr.Button("5️⃣ RAG Document Ingestion", elem_classes=["step-nav-btn"])
-            btn_step6 = gr.Button("6️⃣ Conversation Memory", elem_classes=["step-nav-btn"])
-            btn_step7 = gr.Button("7️⃣ Final AI Playground", elem_classes=["step-nav-btn"])
+            gr.Markdown("### Side Control Panel")
+            btn_step1 = gr.Button("1. Connect to Gemini", elem_classes=["step-nav-btn"])
+            btn_step2 = gr.Button("2. Add LangChain", elem_classes=["step-nav-btn"])
+            btn_step3 = gr.Button("3. BDACC Prompt", elem_classes=["step-nav-btn"])
+            btn_step4 = gr.Button("4. Think like a PM", elem_classes=["step-nav-btn"])
+            btn_step5 = gr.Button("5. RAG Document Ingestion", elem_classes=["step-nav-btn"])
+            btn_step6 = gr.Button("6. Conversation Memory", elem_classes=["step-nav-btn"])
+            btn_step7 = gr.Button("7. Final AI Playground", elem_classes=["step-nav-btn"])
 
         # Center Content Pane
         with gr.Column(scale=6):
@@ -882,7 +882,7 @@ response = llm.invoke("What is artificial intelligence in 2 short sentences?")''
                     language="python",
                     interactive=False
                 )
-                run_s1 = gr.Button("▶️ Run Step 1", variant="primary")
+                run_s1 = gr.Button("Run Step 1", variant="primary")
                 out_s1 = gr.Markdown(elem_classes=["output-box"])
 
             # Step 2 Component Group
@@ -901,7 +901,7 @@ response = chain.invoke({"input": "Give 3 quick tips for a first-year student."}
                     language="python",
                     interactive=False
                 )
-                run_s2 = gr.Button("▶️ Run Step 2", variant="primary")
+                run_s2 = gr.Button("Run Step 2", variant="primary")
                 out_s2 = gr.Markdown(elem_classes=["output-box"])
 
             # Step 3 Component Group
@@ -922,7 +922,7 @@ chain = prompt | llm''',
                     language="python",
                     interactive=False
                 )
-                run_s3 = gr.Button("▶️ Run Step 3", variant="primary")
+                run_s3 = gr.Button("Run Step 3", variant="primary")
                 out_s3 = gr.Markdown(elem_classes=["output-box"])
 
             # Step 4 Component Group
@@ -931,8 +931,8 @@ chain = prompt | llm''',
                 gr.Markdown("Demonstrating persona engineering by swapping the system prompt template on the fly.")
                 
                 with gr.Row():
-                    pm_toggle = gr.Checkbox(label="🧑💼 Enable PM Mode", value=False)
-                    mode_indicator = gr.Markdown("🎓 BDACC Mode Active", elem_classes=["mode-badge"])
+                    pm_toggle = gr.Checkbox(label="Enable PM Mode", value=False)
+                    mode_indicator = gr.Markdown("BDACC Mode Active", elem_classes=["mode-badge"])
                 
                 code_s4 = gr.Code(
                     value='''pm_system_prompt = """
@@ -946,11 +946,11 @@ active_prompt = pm_system_prompt if pm_mode else bdacc_system_prompt''',
                 
                 gr.Markdown("**Click sample question chips to run:**")
                 with gr.Row():
-                    chip1 = gr.Button("📱 Mobile App vs Website first?", size="sm")
-                    chip2 = gr.Button("📊 Prioritize BDACC Onboarding", size="sm")
-                    chip3 = gr.Button("📐 Explain RICE Score", size="sm")
+                    chip1 = gr.Button("Mobile App vs Website first?", size="sm")
+                    chip2 = gr.Button("Prioritize BDACC Onboarding", size="sm")
+                    chip3 = gr.Button("Explain RICE Score", size="sm")
                 
-                run_s4 = gr.Button("▶️ Run Custom Prompt", variant="primary")
+                run_s4 = gr.Button("Run Custom Prompt", variant="primary")
                 out_s4 = gr.Markdown(elem_classes=["output-box"])
 
             # Step 5 Component Group
@@ -959,13 +959,13 @@ active_prompt = pm_system_prompt if pm_mode else bdacc_system_prompt''',
                 gr.Markdown("Demonstrating how model capabilities are expanded via custom document chunking and vector search.")
                 
                 gr.Markdown("### Phase A: Question Before Document Upload")
-                btn_ask_before = gr.Button("❓ Ask: 'Who is the first General Secretary of BDACC?'")
+                btn_ask_before = gr.Button("Ask: 'Who is the first General Secretary of BDACC?'")
                 out_rag_before = gr.Markdown(elem_classes=["output-box"])
                 
                 gr.Markdown("---")
                 gr.Markdown("### Phase B: Upload & Ingest Knowledge Document")
                 file_upload = gr.File(label="Upload Document (.txt, .pdf, .md)", file_types=[".txt", ".pdf", ".md"])
-                btn_ingest = gr.Button("📚 Add This Knowledge", variant="primary")
+                btn_ingest = gr.Button("Add Knowledge Document", variant="primary")
                 out_ingest = gr.Markdown(elem_classes=["output-box"])
                 
                 code_s5 = gr.Code(
@@ -979,7 +979,7 @@ retriever = vectorstore.as_retriever(search_kwargs={"k": 2})''',
                 )
                 
                 gr.Markdown("### Phase C: Re-Ask Question After Upload")
-                btn_ask_after = gr.Button("🔍 Re-Ask: 'Who is the first General Secretary of BDACC?'", variant="primary")
+                btn_ask_after = gr.Button("Re-Ask: 'Who is the first General Secretary of BDACC?'", variant="primary")
                 out_rag_after = gr.Markdown(elem_classes=["output-box"])
 
             # Step 6 Component Group
@@ -998,7 +998,7 @@ memory_chain = RunnableWithMessageHistory(
                     interactive=False
                 )
                 name_input = gr.Textbox(label="Enter a Student Name & Department for Memory Test:", value="Rahul from CSE")
-                run_s6 = gr.Button("▶️ Test Conversation Memory", variant="primary")
+                run_s6 = gr.Button("Test Conversation Memory", variant="primary")
                 out_s6 = gr.Markdown(elem_classes=["output-box"])
 
             # Step 7 Component Group
@@ -1007,7 +1007,7 @@ memory_chain = RunnableWithMessageHistory(
                 gr.Markdown("Full production chatbot combining **BDACC Knowledge + RAG Search + Conversational Memory + PM Persona Toggle**.")
                 
                 with gr.Row():
-                    final_pm_toggle = gr.Checkbox(label="🧑💼 Enable PM Persona", value=False)
+                    final_pm_toggle = gr.Checkbox(label="Enable PM Persona", value=False)
                 
                 chatbot = gr.Chatbot(height=400, label="BDACC Assistant")
                 msg_box = gr.Textbox(placeholder="Ask anything about BDACC, Data Science, or Product Management...", label="Your Question")
@@ -1021,7 +1021,7 @@ memory_chain = RunnableWithMessageHistory(
 
         # Right Side Architecture Diagram Panel
         with gr.Column(scale=3, elem_id="diagram-column"):
-            gr.Markdown("### 📐 What Just Happened?")
+            gr.Markdown("### What Just Happened?")
             gr.Markdown("*Live System Architecture Flow*")
             diagram_view = gr.Markdown(DIAGRAMS[1], elem_classes=["diagram-box"])
 
